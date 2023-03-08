@@ -11,34 +11,22 @@
           PANDAS SYSTEM
         </h2>
         <div class="flex flex-col mt-10">
-          <div class="relative mb-3 xl:w-96" data-te-input-wrapper-init>
+          <div class="xl:w-96" data-te-input-wrapper-init>
             <input
               v-model="form.username"
               type="text"
-              class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 shadow-slate-600"
-              id="exampleFormControlInput1"
-              placeholder="Example label"
+              class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear shadow-slate-600"
+              placeholder="User name"
             />
-            <label
-              for="exampleFormControlInput1"
-              class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
-              >Example label
-            </label>
           </div>
-          <div class="relative mb-3 xl:w-96" data-te-input-wrapper-init>
+          <div class="xl:w-96" data-te-input-wrapper-init>
             <input
               v-model="form.password"
               type="text"
-              class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 shadow-slate-600"
-              id="exampleFormControlInput1"
-              placeholder="Example label"
+              class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear shadow-slate-600"
+              placeholder="Password"
               @keyup="login"
             />
-            <label
-              for="exampleFormControlInput1"
-              class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
-              >Example label
-            </label>
           </div>
           <button
             @click="login"

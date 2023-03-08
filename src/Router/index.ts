@@ -3,12 +3,19 @@ import Login from "@/Views/Auth/Login.vue";
 const routes = [
   {
     path: "/",
+    name: "home",
     component: () => import("@/Layout/Layout.vue"),
+    redirect: { name: "dashboard" },
     children: [
       {
-        name: "Dashboard",
+        name: "dashboard",
         path: "",
         component: () => import("@/Views/DashBoard.vue"),
+      },
+      {
+        name: "Users",
+        path: "/users",
+        component: () => import("@/Views/Users.vue"),
       },
     ],
   },
