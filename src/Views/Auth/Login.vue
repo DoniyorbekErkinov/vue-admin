@@ -1,98 +1,82 @@
 <template>
-  <div>
-    <div class="header">
-      <div class="inner-header">
-        <div class="logo">
-          <span>PAWS WMS</span>
-          <span>Makes Everything Simple</span>
-        </div>
-        <div class="form-box">
-          <div class="window">
-            <h2>Login</h2>
-            <form class="box">
-              <input
-                v-model="form.username"
-                type="username"
-                class="mt-4 form-control"
-                placeholder="Your username"
-              />
-              <input
-                v-model="form.password"
-                type="password"
-                class="mt-2 form-control"
-                placeholder="Your password"
-              />
-              <input
-                type="submit"
-                class="mb-2 btn btn-light mt-2"
-                value="Sign In"
-                @click="setTokent"
-              />
-            </form>
-          </div>
-        </div>
-      </div>
-      <!--Waves Container-->
-      <div>
-        <svg
-          class="waves"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          viewBox="0 24 150 28"
-          preserveAspectRatio="none"
-          shape-rendering="auto"
-        >
-          <defs>
-            <path
-              id="gentle-wave"
-              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-            />
-          </defs>
-          <g class="parallax">
-            <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="0"
-              fill="rgba(255,255,255,0.7"
-            />
-            <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="3"
-              fill="rgba(255,255,255,0.5)"
-            />
-            <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="5"
-              fill="rgba(255,255,255,0.3)"
-            />
-            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-          </g>
-        </svg>
-      </div>
-      <!--Waves end-->
+  <div class="flex h-[100vh] bg-slate-100">
+    <div class="w-[50%] flex items-center justify-center py-10">
+      <img class="w-[75%] mx-auto" src="@/assets/login.png" />
     </div>
-    <!--Header ends-->
+    <div
+      class="flex flex-col mx-auto my-auto h-[40%] w-[25%] border border-[#efeff2] rounded-md shadow-sm shadow-slate-600"
+    >
+      <div class="flex flex-col justify-center items-center py-10 text-center">
+        <h2 class="text-4xl font-semibold text-slate-700 italic font-sans">
+          PANDAS SYSTEM
+        </h2>
+        <div class="flex flex-col mt-10">
+          <div class="relative mb-3 xl:w-96" data-te-input-wrapper-init>
+            <input
+              v-model="form.username"
+              type="text"
+              class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 shadow-slate-600"
+              id="exampleFormControlInput1"
+              placeholder="Example label"
+            />
+            <label
+              for="exampleFormControlInput1"
+              class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+              >Example label
+            </label>
+          </div>
+          <div class="relative mb-3 xl:w-96" data-te-input-wrapper-init>
+            <input
+              v-model="form.password"
+              type="text"
+              class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 shadow-slate-600"
+              id="exampleFormControlInput1"
+              placeholder="Example label"
+              @keyup="login"
+            />
+            <label
+              for="exampleFormControlInput1"
+              class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+              >Example label
+            </label>
+          </div>
+          <button
+            @click="login"
+            class="shadow-sm shadow-slate-600 w-[40%] mx-auto py-2 mt-4 text-xl font-medium text-slate-700 italic font-sans"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const form = ref({
   username: "",
   password: "",
 });
-function setTokent(e: any): void {
+function login(e: any): void {
   e.preventDefault();
-  if (form.value.password && form.value.username) {
-    if (form.value.password === "panda" && form.value.username === "panda") {
-      alert("Loged in");
+  if (e.keyCode === 13) {
+    if (form.value.password && form.value.username) {
+      if (form.value.password === "panda" && form.value.username === "panda") {
+        localStorage.setItem(
+          "access",
+          "RE12rDFG54DlklswsaFG64t23li21nmb54try654asd54a"
+        );
+        alert("Loged in");
+        router.push("/");
+      } else {
+        alert("Login yoki parol noto'g'ri");
+      }
     } else {
-      alert("Login yoki parol noto'g'ri");
+      alert("Login yoki parol kiritilmagan");
     }
-  } else {
-    alert("Login yoki parol kiritilmagan");
   }
 }
 </script>
