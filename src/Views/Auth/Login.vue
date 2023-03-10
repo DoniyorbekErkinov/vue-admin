@@ -49,8 +49,8 @@ const form = ref({
   password: "",
 });
 function login(e: any): void {
-  e.preventDefault();
-  if (e.keyCode === 13) {
+  console.log(e.keyCode);
+  if (e.keyCode === 13 || e.keyCode == undefined) {
     if (form.value.password && form.value.username) {
       if (form.value.password === "panda" && form.value.username === "panda") {
         localStorage.setItem(
