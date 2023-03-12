@@ -1,4 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onBeforeMount } from "vue";
+onBeforeMount(() => {
+  if (localStorage.dark == "true") {
+    localStorage.setItem("dark", JSON.stringify(true));
+    document.documentElement.classList.add("dark");
+  } else {
+    localStorage.setItem("dark", JSON.stringify(false));
+    document.documentElement.classList.remove("dark");
+  }
+});
+</script>
 
 <template>
   <router-view />

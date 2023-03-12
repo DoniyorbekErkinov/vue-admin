@@ -8,7 +8,7 @@
   }
   #app {
     font-family: "Poppins", sans-serif;
-    @apply text-black bg-lavender;
+    @apply text-black bg-[#845EC2];
   }
   #app::-webkit-scrollbar {
     width: 0px;

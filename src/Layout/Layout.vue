@@ -5,7 +5,7 @@
       class="slg:block dark:bg-blueish-black bg-white dark:border-black border-[#eef1fa] border-2 switch-button"
       style="transition: all 0.3s"
       @click="switchMinimize"
-      :class="sidebarSwitch ? 'left-[285px]' : 'left-[100px]'"
+      :class="sidebarSwitch ? 'left-[265px]' : 'left-[90px]'"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -25,17 +25,67 @@
     </div>
     <div
       :class="[sidebarSwitch ? 'slg:w-[285px]' : 'slg:w-[100px]']"
-      class="slg:flex width-transition slg:flex-col slg:fixed slg:inset-y-0 dark:bg-blueish-black bg-slate-300"
+      class="slg:flex width-transition slg:flex-col slg:fixed slg:inset-y-0 justify-center dark:bg-[#352e78] bg-slate-100"
     >
-      <ul class="flex flex-col">
-        <router-link to="/">Home</router-link>
-        <router-link to="/users">Users</router-link>
-        <router-link to="/login">Login</router-link>
-      </ul>
+      <div
+        class="flex flex-col w-[85%] mx-auto h-[95%] bg-[#07004d] py-12"
+        style="border-radius: 45px"
+      >
+        <div class="flex justify-center items-center">
+          <img
+            src="/pandaicon.png"
+            :class="sidebarSwitch ? 'w-[19%] mr-4' : 'w-3/5'"
+            alt="flaticon.com"
+          />
+          <p
+            v-if="sidebarSwitch"
+            class="text-snow text-3xl font-extralight text-center"
+          >
+            PANDAS
+          </p>
+        </div>
+        <div class="mt-8">
+          <div
+            class="flex items-center mt-3 py-1 px-8"
+            :class="sidebarSwitch ? '' : 'justify-center'"
+            v-for="(item, i) in routers"
+            :key="i"
+          >
+            <img
+              v-if="item.name == 'Dashboard'"
+              class="cursor-pointer"
+              :class="
+                sidebarSwitch
+                  ? 'w-1/6 mr-4'
+                  : 'w-full min-w-[35px] hover:scale-125'
+              "
+              src="/panda2.png"
+              @click="goPage(item.link)"
+            />
+            <img
+              v-if="item.name == 'Users'"
+              @click="goPage(item.link)"
+              class="cursor-pointer"
+              :class="
+                sidebarSwitch
+                  ? 'w-1/6 mr-4'
+                  : 'w-full min-w-[35px] hover:scale-125'
+              "
+              src="/users.png"
+            />
+            <router-link
+              v-if="sidebarSwitch"
+              class="text-snow text-xl text-left"
+              :to="item.link"
+              >{{ item.name }}</router-link
+            >
+          </div>
+        </div>
+      </div>
     </div>
     <div
       :class="[sidebarSwitch ? 'slg:pl-[285px]' : 'slg:pl-[100px]']"
-      class="flex h-full flex-col width-transition flex-1 z-[1] slg:pt-0 slg:pb-0 pt-[52px] dark:bg-black bg-slate-100 slg:overflow-y-auto pb-[76px] slg:scrollbar dark:text-white slg:dark:dark-scrollbar overflow-x-hidden"
+      class="flex h-full flex-col width-transition flex-1 z-[1] slg:pt-0 slg:pb-0 pt-[52px] dark:bg-[#352e78] bg-slate-100 slg:overflow-y-auto slg:scrollbar dark:text-white slg:dark:dark-scrollbar overflow-x-hidden"
       id="scrollTop"
     >
       <RouterView />
@@ -44,6 +94,12 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const routers = ref([
+  { name: "Dashboard", link: "/" },
+  { name: "Users", link: "/users" },
+]);
 const storedSidebarSwitch = localStorage.getItem("sidebarSwitch");
 const sidebarSwitch = ref<Boolean>(
   storedSidebarSwitch ? JSON.parse(storedSidebarSwitch) : true
@@ -51,6 +107,9 @@ const sidebarSwitch = ref<Boolean>(
 function switchMinimize() {
   sidebarSwitch.value = !sidebarSwitch.value;
   localStorage.setItem("sidebarSwitch", JSON.stringify(sidebarSwitch.value));
+}
+function goPage(link: string) {
+  router.push(link);
 }
 </script>
 
