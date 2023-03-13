@@ -1,89 +1,48 @@
-import axios from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
-const ApiService = {
-  // Stores the 401 interceptor position so that it can be later ejected when needed
-  _401interceptor: null,
-  _requestInterceptor: null,
+const axiosInstance = axios.create({
+  baseURL: "https://",
+  timeout: 5000, // Request timeout in milliseconds
+});
 
-  init(baseURL) {
-    axios.defaults.baseURL = baseURL;
+export const ApiService = {
+  async get<T = any>(url: string, data?: any): Promise<T> {
+    return await axiosInstance
+      .get(url, { params: data })
+      .then((response: AxiosResponse<T>) => response.data)
+      .catch((error: AxiosError) => {
+        console.error(`ApiService GET error: ${error}`);
+        throw error;
+      });
   },
 
-  setHeader() {
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${localStorage.access}`;
+  async post<T = any>(url: string, data: any): Promise<T> {
+    return await axiosInstance
+      .post(url, data)
+      .then((response: AxiosResponse<T>) => response.data)
+      .catch((error: AxiosError) => {
+        console.error(`ApiService POST error: ${error}`);
+        throw error;
+      });
   },
 
-  removeHeader() {
-    axios.defaults.headers.common = {};
+  async put<T = any>(url: string, data: any): Promise<T> {
+    return await axiosInstance
+      .put(url, data)
+      .then((response: AxiosResponse<T>) => response.data)
+      .catch((error: AxiosError) => {
+        console.error(`ApiService PUT error: ${error}`);
+        throw error;
+      });
   },
 
-  get(resource) {
-    return axios.get(resource);
-  },
-
-  post(resource, data) {
-    return axios.post(resource, data);
-  },
-
-  //   postFile(resource, data) {
-  //     return axios.post(resource, data, {
-  //       responseType: "blop",
-  //     });
-  //   },
-
-  //   getFile(resource: any, data: any) {
-  //     return axios.get(resource, data, {
-  //       responseType: "blop",
-  //     });
-  //   },
-
-  formatDataFile(resource, data) {
-    return axios.post(resource, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  },
-
-  put(resource, data) {
-    return axios.put(resource, data);
-  },
-
-  delete(resource) {
-    return axios.delete(resource);
-  },
-  /**
-   * Perform a custom axios request.
-   *
-   * data is an object containing the following properties:
-   *  - method
-   *  - url
-   *  - data ... request payload
-   *  - auth (optional)
-   *    - username
-   *    - password
-   **/
-  customRequest(data) {
-    return axios(data);
-  },
-
-  mount401Interceptor() {
-    let requestCount = 0;
-    const messages = [];
-    // this._401interceptor = axios.interceptors.response.use(async (error) => {
-    //   if (error.request.status === 401) {
-    //     router.push("/login");
-    //   }
-    // });
-  },
-
-  unmount401Interceptor() {
-    // Eject the interceptor
-    // axios.interceptors.response.eject(this._401interceptor);
-    // axios.interceptors.request.eject(this._requestInterceptor);
+  async delete<T = any>(url: string, data?: any): Promise<T> {
+    return await axiosInstance
+      .delete(url, { data })
+      .then((response: AxiosResponse<T>) => response.data)
+      .catch((error: AxiosError) => {
+        console.error(`ApiService DELETE error: ${error}`);
+        throw error;
+      });
   },
 };
-
-export default ApiService;

@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #261f6c;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-[#29cff5] dark:bg-[#07004d];
+  border-radius: 14px;
+  border: 3px solid #261f6c;
+}
+
 @layer base {
   html {
     font-family: "Poppins:ital,san-serf";
@@ -100,5 +115,8 @@
   }
   .content-sk {
     @apply bg-slate-200 dark:bg-slate-400;
+  }
+  .layout {
+    @apply mt-6 py-12 mx-4 h-[95%] bg-[#29cff5] dark:bg-[#07004d] rounded-[45px];
   }
 }
