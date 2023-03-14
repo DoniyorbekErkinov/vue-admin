@@ -31,55 +31,73 @@
         class="flex flex-col w-[85%] mx-auto h-[95%] bg-[#07004d] py-12"
         style="border-radius: 45px"
       >
-        <div class="flex justify-center items-center">
-          <img
-            src="/pandaicon.png"
-            :class="sidebarSwitch ? 'w-[19%] mr-4' : 'w-3/5'"
-            alt="flaticon.com"
-          />
-          <p
-            v-if="sidebarSwitch"
-            class="text-snow text-3xl font-extralight text-center"
-          >
-            PANDAS
-          </p>
-        </div>
-        <div class="mt-8">
-          <div
-            class="flex items-center mt-3 py-1 px-8"
-            :class="sidebarSwitch ? '' : 'justify-center'"
-            v-for="(item, i) in routers"
-            :key="i"
-          >
+        <div class="flex-grow">
+          <div class="flex justify-center items-center">
             <img
-              v-if="item.name == 'Dashboard'"
-              class="cursor-pointer"
-              :class="
-                sidebarSwitch
-                  ? 'w-1/6 mr-4'
-                  : 'w-full min-w-[35px] hover:scale-125'
-              "
-              src="/panda2.png"
-              @click="goPage(item.link)"
+              src="/pandaicon.png"
+              :class="sidebarSwitch ? 'w-[19%] mr-4' : 'w-3/5'"
+              alt="flaticon.com"
             />
-            <img
-              v-if="item.name == 'Users'"
-              @click="goPage(item.link)"
-              class="cursor-pointer"
-              :class="
-                sidebarSwitch
-                  ? 'w-1/6 mr-4'
-                  : 'w-full min-w-[35px] hover:scale-125'
-              "
-              src="/users.png"
-            />
-            <router-link
+            <p
               v-if="sidebarSwitch"
-              class="text-snow text-xl text-left"
-              :to="item.link"
-              >{{ item.name }}</router-link
+              class="text-snow text-3xl font-extralight text-center"
             >
+              PANDAS
+            </p>
           </div>
+          <div class="mt-8">
+            <div
+              class="flex items-center mt-3 py-1 px-8"
+              :class="sidebarSwitch ? '' : 'justify-center'"
+              v-for="(item, i) in routers"
+              :key="i"
+            >
+              <img
+                v-if="item.name == 'Dashboard'"
+                class="cursor-pointer"
+                :class="
+                  sidebarSwitch
+                    ? 'w-1/6 mr-4'
+                    : 'w-full min-w-[35px] hover:scale-125'
+                "
+                src="/panda2.png"
+                @click="goPage(item.link)"
+              />
+              <img
+                v-if="item.name == 'Users'"
+                @click="goPage(item.link)"
+                class="cursor-pointer"
+                :class="
+                  sidebarSwitch
+                    ? 'w-1/6 mr-4'
+                    : 'w-full min-w-[35px] hover:scale-125'
+                "
+                src="/users.png"
+              />
+              <router-link
+                v-if="sidebarSwitch"
+                class="text-snow text-xl text-left"
+                :to="item.link"
+                >{{ item.name }}</router-link
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          @click="mode = !mode"
+          class="flex justify-center items-end bg-[#dbdff14d] cursor-pointer rounded-md mx-auto"
+          :class="sidebarSwitch ? 'py-2 px-4 w-1/4' : 'py-2 w-1/2 rounded-full'"
+        >
+          <BaseIcon
+            v-if="!mode"
+            name="LightModeIcon"
+            :class="sidebarSwitch ? 'h-4 w-4' : 'w-6 h-6'"
+          />
+          <BaseIcon
+            v-else
+            name="DarkModeIcon"
+            :class="sidebarSwitch ? 'h-4 w-4' : 'w-6 h-6'"
+          />
         </div>
       </div>
     </div>
@@ -93,13 +111,23 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const routers = ref([
   { name: "Dashboard", link: "/" },
   { name: "Users", link: "/users" },
 ]);
+const mode = ref<Boolean>(false);
+watch(mode, (newVal, oldVal) => {
+  if (mode.value) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("Mode", JSON.stringify(true));
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("Mode", JSON.stringify(true));
+  }
+});
 const storedSidebarSwitch = localStorage.getItem("sidebarSwitch");
 const sidebarSwitch = ref<Boolean>(
   storedSidebarSwitch ? JSON.parse(storedSidebarSwitch) : true
