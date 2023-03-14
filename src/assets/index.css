@@ -7,14 +7,13 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #261f6c;
+  @apply bg-[#A4D7E1] dark:bg-[#261f6c];
   border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply bg-[#29cff5] dark:bg-[#07004d];
+  @apply bg-[#A4D7E1] dark:bg-[#07004d] border-solid border-4 border-[#DAF1F9] dark:border-[#261f6c];
   border-radius: 14px;
-  border: 3px solid #261f6c;
 }
 
 @layer base {
@@ -117,6 +116,6 @@
     @apply bg-slate-200 dark:bg-slate-400;
   }
   .layout {
-    @apply mt-6 py-12 mx-4 h-[95%] bg-[#29cff5] dark:bg-[#07004d] rounded-[45px];
+    @apply mt-6 py-12 mx-4 h-[95%] bg-[#A4D7E1] dark:bg-[#07004d] rounded-[45px];
   }
 }

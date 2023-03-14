@@ -16,7 +16,7 @@
               v-model="form.username"
               type="text"
               class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear shadow-slate-600"
-              placeholder="User name"
+              placeholder="User name (panda)"
             />
           </div>
           <div class="xl:w-96" data-te-input-wrapper-init>
@@ -24,7 +24,7 @@
               v-model="form.password"
               type="text"
               class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear shadow-slate-600"
-              placeholder="Password"
+              placeholder="Password (panda)"
               @keyup="login"
             />
           </div>
