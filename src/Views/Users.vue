@@ -85,7 +85,7 @@ const userTodos = ref([]);
 const loading = ref<Boolean>(false);
 async function getUserTodos(id: string | number) {
   loading.value = true;
-  await ApiService.get(`${baseUrl}/users/${id}/todos`, {})
+  await ApiService.get(`jsonplaceholder.typicode.com/users/${id}/todos`, {})
     .then((res) => {
       userTodos.value = res;
       loading.value = false;
@@ -100,7 +100,7 @@ async function getUserTodos(id: string | number) {
 }
 async function getUser() {
   loading.value = true;
-  await ApiService.get(`${baseUrl}/users`)
+  await ApiService.get(`jsonplaceholder.typicode.com/users`)
     .then((resp) => {
       users.value = resp;
       loading.value = false;
