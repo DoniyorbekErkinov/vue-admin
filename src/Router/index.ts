@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "@/Views/Auth/Login.vue";
-const routes = [
+const routes: any = [
   {
     path: "/",
     name: "home",
