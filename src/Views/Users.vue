@@ -79,13 +79,16 @@
 import { ApiService } from "../Service/ApiService";
 import type { UserType } from "../Types/index";
 import { ref, onMounted } from "vue";
-const baseUrl = "jsonplaceholder.typicode.com";
+const baseUrl = "https://jsonplaceholder.typicode.com";
 const users = ref<UserType[]>([]);
 const userTodos = ref([]);
 const loading = ref<Boolean>(false);
 async function getUserTodos(id: string | number) {
   loading.value = true;
-  await ApiService.get(`jsonplaceholder.typicode.com/users/${id}/todos`, {})
+  await ApiService.get(
+    `https://jsonplaceholder.typicode.com/users/${id}/todos`,
+    {}
+  )
     .then((res) => {
       userTodos.value = res;
       loading.value = false;
@@ -100,7 +103,7 @@ async function getUserTodos(id: string | number) {
 }
 async function getUser() {
   loading.value = true;
-  await ApiService.get(`jsonplaceholder.typicode.com/users`)
+  await ApiService.get(`https://jsonplaceholder.typicode.com/users`)
     .then((resp) => {
       users.value = resp;
       loading.value = false;

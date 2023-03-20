@@ -1,7 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://",
   timeout: 5000, // Request timeout in milliseconds
 });
 
