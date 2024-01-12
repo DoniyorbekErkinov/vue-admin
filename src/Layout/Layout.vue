@@ -1,31 +1,27 @@
+<script setup lang="ts">
+import { ref, watch, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const routers = ref([
+  { name: "Dashboard", link: "/", img: '/panda2.png' },
+  { name: "Users", link: "/users", img: '/users.png' },
+]);
+
+function goPage(link: string) {
+  router.push(link);
+}
+function logOut() {
+  localStorage.clear();
+  if (!localStorage.access) {
+    router.push("/login");
+  }
+}
+</script>
 <template>
   <div class="h-full relative">
+   
     <div
-      id="switch-button"
-      class="slg:block dark:bg-blueish-black bg-white dark:border-black border-[#eef1fa] border-2 switch-button"
-      style="transition: all 0.3s"
-      @click="switchMinimize"
-      :class="sidebarSwitch ? 'left-[265px]' : 'left-[90px]'"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        :class="[!sidebarSwitch ? 'rotate-180' : '']"
-        class="h-6 w-6 switch-button-svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15 19l-7-7 7-7"
-        />
-      </svg>
-    </div>
-    <div
-      :class="[sidebarSwitch ? 'slg:w-[285px]' : 'slg:w-[100px]']"
-      class="slg:flex width-transition slg:flex-col slg:fixed slg:inset-y-0 justify-center dark:bg-[#352e78] bg-[#DAF1F9]"
+      class="slg:w-[285px] slg:flex width-transition slg:flex-col slg:fixed slg:inset-y-0 justify-center dark:bg-[#352e78] bg-[#DAF1F9]"
     >
       <div
         class="flex flex-col w-[85%] mx-auto h-[95%] dark:bg-[#07004d] bg-[#A4D7E1] py-12"
@@ -35,52 +31,31 @@
           <div class="flex justify-center items-center">
             <img
               src="/pandaicon.png"
-              :class="sidebarSwitch ? 'w-[19%] mr-4' : 'w-3/5'"
+              class="w-[19%] mr-4"
               alt="flaticon.com"
             />
             <p
-              v-if="sidebarSwitch"
-              class="text-snow text-3xl font-extralight text-center"
+              class="text-snow text-3xl font-earthlight text-center"
             >
               PANDAS
             </p>
           </div>
           <div class="mt-8">
-            <div
+            <router-link :to="item.link"
               class="flex items-center mt-3 py-1 px-8"
-              :class="sidebarSwitch ? '' : 'justify-center'"
               v-for="(item, i) in routers"
               :key="i"
             >
-              <img
-                v-if="item.name == 'Dashboard'"
-                class="cursor-pointer"
-                :class="
-                  sidebarSwitch
-                    ? 'w-1/6 mr-4'
-                    : 'w-full min-w-[35px] hover:scale-125'
-                "
-                src="/panda2.png"
+              <img                
+                class="w-1/6 mr-4 cursor-pointer"                
+                :src="item.img"
                 @click="goPage(item.link)"
               />
-              <img
-                v-if="item.name == 'Users'"
-                @click="goPage(item.link)"
-                class="cursor-pointer"
-                :class="
-                  sidebarSwitch
-                    ? 'w-1/6 mr-4'
-                    : 'w-full min-w-[35px] hover:scale-125'
-                "
-                src="/users.png"
-              />
-              <router-link
-                v-if="sidebarSwitch"
-                class="text-snow text-xl text-left"
-                :to="item.link"
-                >{{ item.name }}</router-link
+              <span               
+                class="text-snow text-xl text-left"                
+                >{{ item.name }}</span
               >
-            </div>
+            </router-link>
           </div>
         </div>
         <div
@@ -117,108 +92,14 @@
               stroke-linejoin="round"
             />
           </svg>
-        </div>
-        <div
-          @click="toggleDarkMode"
-          class="flex justify-center items-end bg-[#dbdff14d] cursor-pointer rounded-md mx-auto"
-          :class="sidebarSwitch ? 'py-2 px-4 w-1/4' : 'py-2 w-1/2 rounded-full'"
-        >
-          <BaseIcon
-            v-if="mode == 'light'"
-            name="LightModeIcon"
-            :class="sidebarSwitch ? 'h-4 w-4' : 'w-6 h-6'"
-          />
-          <BaseIcon
-            v-if="mode == 'dark'"
-            name="DarkModeIcon"
-            :class="sidebarSwitch ? 'h-4 w-4' : 'w-6 h-6'"
-          />
-        </div>
+        </div>        
       </div>
     </div>
     <div
-      :class="[sidebarSwitch ? 'slg:pl-[285px]' : 'slg:pl-[100px]']"
-      class="flex h-full flex-col width-transition flex-1 z-[1] slg:pt-0 slg:pb-0 pt-[52px] dark:bg-[#352e78] bg-[#DAF1F9] slg:overflow-y-auto slg:scrollbar dark:text-white slg:dark:dark-scrollbar overflow-x-hidden"
+      class="flex h-full flex-col slg:pl-[285px] width-transition flex-1 z-[1] slg:pt-0 slg:pb-0 pt-[52px] dark:bg-[#352e78] bg-[#DAF1F9] slg:overflow-y-auto slg:scrollbar dark:text-white slg:dark:dark-scrollbar overflow-x-hidden"
       id="scrollTop"
     >
       <RouterView />
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { ref, watch, onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
-const routers = ref([
-  { name: "Dashboard", link: "/" },
-  { name: "Users", link: "/users" },
-]);
-const mode = ref<string>("");
-
-function toggleDarkMode() {
-  if (mode.value == "light") {
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("Mode", "dark");
-    mode.value = "dark";
-  } else {
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("Mode", "light");
-    mode.value = "light";
-  }
-}
-onBeforeMount(() => {
-  if (localStorage.Mode == "dark") {
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("Mode", "dark");
-    mode.value = "dark";
-  } else {
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("Mode", "light");
-    mode.value = "light";
-  }
-});
-const storedSidebarSwitch = localStorage.getItem("sidebarSwitch");
-const sidebarSwitch = ref<Boolean>(
-  storedSidebarSwitch ? JSON.parse(storedSidebarSwitch) : true
-);
-function switchMinimize() {
-  sidebarSwitch.value = !sidebarSwitch.value;
-  localStorage.setItem("sidebarSwitch", JSON.stringify(sidebarSwitch.value));
-}
-function goPage(link: string) {
-  router.push(link);
-}
-function logOut() {
-  localStorage.removeItem("access");
-  if (!localStorage.access) {
-    router.push("/login");
-  }
-}
-</script>
-
-<style lang="scss" scoped>
-.switch-button {
-  z-index: 100;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  padding: 7px 12px 12px 6px;
-  position: absolute;
-  top: 120px;
-  transform: translate(-50%, 0);
-  cursor: pointer;
-
-  svg {
-    color: #383874;
-    transition: all 0.3s;
-  }
-}
-
-.scrollTop {
-  position: fixed;
-}
-
-.width-transition {
-  transition: all 0.3s;
-}
-</style>

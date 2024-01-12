@@ -4,10 +4,10 @@
     <div
       class="grid grid-cols-5 gap-6 px-12 mx-8 h-full overflow-y-auto relative"
     >
-      <div :class="userTodos.length > 0 ? 'col-span-3' : 'col-span-5'" class="">
+      <div :class="userTodo.length > 0 ? 'col-span-3' : 'col-span-5'" class="">
         <div
           :class="
-            userTodos.length > 0 ? 'grid-cols-3 gap-6' : 'grid-cols-6 gap-3'
+            userTodo.length > 0 ? 'grid-cols-3 gap-6' : 'grid-cols-6 gap-3'
           "
           class="grid mt-4"
         >
@@ -15,7 +15,7 @@
             class="border-[0.5px] border-[#94cbd5] bg-lavender rounded-2xl transition-all duration-300 ease-in-out overflow-hidden hover:scale-110 cursor-pointer"
             v-for="(user, i) in users"
             :key="i"
-            @click="getUserTodos(user.id)"
+            @click="getUserTodo(user.id)"
           >
             <div
               class="text-slate-200 text-lg font-medium tracking-wider bg-[#75b2be] rounded-t-2xl"
@@ -52,14 +52,14 @@
         </div>
       </div>
       <div
-        :class="userTodos.length > 0 ? 'col-span-2' : 'hidden'"
-        class="border-[0.5px] px-4 py-4 rounded-md mt-4"
+        :class="userTodo.length > 0 ? 'col-span-2' : 'hidden'"
+        class="border-[0.5px] px-4 py-4 rounded-md mt-4 h-full"
       >
         <div class="text-2xl text-center font-light text-snow mb-4">Todos</div>
         <div class="grid grid-cols-1 gap-6">
           <div
             class="w-full bg-lavender h-full min-h-[60px] max-h-20 rounded-md"
-            v-for="(todo, t) in userTodos"
+            v-for="(todo, t) in userTodo"
             :key="t"
           >
             {{ todo }}
@@ -81,16 +81,16 @@ import type { UserType } from "../Types/index";
 import { ref, onMounted } from "vue";
 const baseUrl = "https://jsonplaceholder.typicode.com";
 const users = ref<UserType[]>([]);
-const userTodos = ref([]);
+const userTodo = ref([]);
 const loading = ref<Boolean>(false);
-async function getUserTodos(id: string | number) {
+async function getUserTodo(id: string | number) {
   loading.value = true;
   await ApiService.get(
     `https://jsonplaceholder.typicode.com/users/${id}/todos`,
     {}
   )
     .then((res) => {
-      userTodos.value = res;
+      userTodo.value = res;
       loading.value = false;
     })
     .catch((e) => {
