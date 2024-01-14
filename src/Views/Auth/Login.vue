@@ -1,12 +1,12 @@
 <template>
-  <div class="flex h-[100vh] bg-slate-100">
-    <div class="w-[50%] flex items-center justify-center py-10">
+  <div class="flex h-screen bg-slate-100">
+    <div class="w-[50%] 2xl:flex xl:flex slg:flex lg:flex hidden items-center justify-center py-10">
       <img class="w-[75%] mx-auto" src="@/assets/login.png" />
     </div>
     <div
-      class="flex flex-col mx-auto my-auto h-[40%] w-[25%] border border-[#efeff2] rounded-md shadow-sm shadow-slate-600"
+      class="flex justify-center items-center mx-auto my-auto h-full 2xl:w-1/2 xl:w-1/2 slg:w-1/2 lg:w-1/2 w-full"
     >
-      <div class="flex flex-col justify-center items-center py-10 text-center">
+      <div class="flex flex-col justify-center items-center py-10 text-center 2xl:w-1/2 xl:w-1/2 slg:w-1/2 lg:w-1/2 w-5/6 border border-[#efeff2] rounded-md shadow-sm shadow-slate-600">
         <h2 class="text-4xl font-semibold text-slate-700 italic font-sans">
           PANDAS SYSTEM
         </h2>
@@ -43,25 +43,21 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { usePost } from "../../Service/ApiService";
 const router = useRouter();
 const form = ref({
-  username: "",
-  password: "",
+  username: "kminchelle",
+  password: "0lelplR",
 });
 function login(e: any): void {
-  console.log(e.keyCode);
   if (e.keyCode === 13 || e.keyCode == undefined) {
     if (form.value.password && form.value.username) {
-      if (form.value.password === "panda" && form.value.username === "panda") {
-        localStorage.setItem(
-          "access",
-          "RE12rDFG54DlklswsaFG64t23li21nmb54try654asd54a"
-        );
+      usePost({ url: '/auth/login', data: form.value }).then((res: any) => {
+          console.log(res);
+          
+        } )
         alert("Loged in");
-        router.push("/");
-      } else {
-        alert("Login yoki parol noto'g'ri");
-      }
+        // router.push("/");      
     } else {
       alert("Login yoki parol kiritilmagan");
     }

@@ -1,47 +1,90 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosError  } from 'axios';
+import { getItem } from '../helpers/storage';
+const env = import.meta.env;
 
-const axiosInstance = axios.create({
-  timeout: 5000, // Request timeout in milliseconds
-});
+function createInstance(baseURL: string, type: string) {
+  const headers: any = {
+    Accept: 'application/json',
+    'Content-Type': type
+  };
 
-export const ApiService = {
-  async get<T = any>(url: string, data?: any): Promise<T> {
-    return await axiosInstance
-      .get(url, { params: data })
-      .then((response: AxiosResponse<T>) => response.data)
-      .catch((error: AxiosError) => {
-        console.error(`ApiService GET error: ${error}`);
-        throw error;
-      });
-  },
+  const axiosInstance = axios.create({ baseURL, headers });
+  axiosInstance.interceptors.request.use(
+    (config: any) => {
+      const isAuthorization = getItem('Authorization');
+      if (isAuthorization && config.headers) {
+        config.headers.Authorization = `Bearer ${isAuthorization || ''}`;
+      }
+      return config;
+    },
+    (error: any) => Promise.reject(error)
+  );
+  axiosInstance.interceptors.response.use(
+    async (res: any) => res,
+    (error: AxiosError) => {
+      const refreshToken = localStorage.getItem('refreshToken');
+      console.log(error.response?.status);
+      if (error.response?.status === 401 && refreshToken) {
+        axios
+          .post(
+            env.VITE_APP_API_URL + 'token/refresh/',
+            { refresh: refreshToken },
+            {
+              headers: {
+                ...headers,
+                authorization: `Bearer ${refreshToken}`
+              }
+            }
+          )
+          .then((res: any) => {
+            localStorage.setItem('Authorization', res.data.access);
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.log(err);
+            
+            localStorage.clear();
+            window.location.reload();
+          });
+      }
+      return Promise.reject(error);
+    }
+  );
 
-  async post<T = any>(url: string, data: any): Promise<T> {
-    return await axiosInstance
-      .post(url, data)
-      .then((response: AxiosResponse<T>) => response.data)
-      .catch((error: AxiosError) => {
-        console.error(`ApiService POST error: ${error}`);
-        throw error;
-      });
-  },
+  return axiosInstance;
+}
+const instance = createInstance(env.VITE_APP_API_URL, 'application/json');
+interface Params {
+  url: string;
+}
 
-  async put<T = any>(url: string, data: any): Promise<T> {
-    return await axiosInstance
-      .put(url, data)
-      .then((response: AxiosResponse<T>) => response.data)
-      .catch((error: AxiosError) => {
-        console.error(`ApiService PUT error: ${error}`);
-        throw error;
-      });
-  },
+interface GetParams extends Params {
+  params?: any;
+}
 
-  async delete<T = any>(url: string, data?: any): Promise<T> {
-    return await axiosInstance
-      .delete(url, { data })
-      .then((response: AxiosResponse<T>) => response.data)
-      .catch((error: AxiosError) => {
-        console.error(`ApiService DELETE error: ${error}`);
-        throw error;
-      });
-  },
+interface PostData extends Params {
+  data?: any;
+}
+// interface PostDataImg extends Params {
+//   url: string;
+//   data?: any;
+// }
+interface DeleteData extends Params {
+  data?: any;
+}
+
+export const useGet = ({ url, params }: GetParams) => {
+  return instance.get(url, { params });
+};
+
+export const usePost = ({ url, data }: PostData) => {
+  return instance.post(url, data);
+};
+
+export const useUpdate = ({ url, data }: DeleteData) => {
+  return instance.patch(url, data);
+};
+
+export const useDelete = ({ url, data }: DeleteData) => {
+  return instance.delete(url, { data });
 };
