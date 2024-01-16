@@ -1,10 +1,14 @@
 export type UserType = {
-  id: number | string;
-  address: object;
-  company: object;
   email: string;
-  name: string;
+  firstName: string;
+  gender: string;
+  id: number;
+  image: string;
+  lastName: string;
   username: string;
-  phone: string | number;
-  website: string;
 };
+
+export type LoginForm = {
+  username: string;
+  password: string;
+}

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineAsyncComponent, markRaw, ref } from "vue";
+import { defineAsyncComponent, markRaw, ref } from 'vue';
 
 export default {
   setup(props) {
@@ -7,7 +7,7 @@ export default {
     const name = ref(props.name);
     const loadIcon = async () => {
       const component = await defineAsyncComponent(
-        () => import(`./icons/${name.value}.vue`)
+        () => import(`./icons/${name.value}.vue`),
       );
       icons.value = markRaw(component);
     };

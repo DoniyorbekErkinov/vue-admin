@@ -76,10 +76,10 @@
 </template>
 
 <script setup lang="ts">
-import { ApiService } from "../Service/ApiService";
-import type { UserType } from "../Types/index";
-import { ref, onMounted } from "vue";
-const baseUrl = "https://jsonplaceholder.typicode.com";
+import { ApiService } from '../Service/ApiService';
+import type { UserType } from '../Types/index';
+import { ref, onMounted } from 'vue';
+const baseUrl = 'https://jsonplaceholder.typicode.com';
 const users = ref<UserType[]>([]);
 const userTodo = ref([]);
 const loading = ref<Boolean>(false);
@@ -87,7 +87,7 @@ async function getUserTodo(id: string | number) {
   loading.value = true;
   await ApiService.get(
     `https://jsonplaceholder.typicode.com/users/${id}/todos`,
-    {}
+    {},
   )
     .then((res) => {
       userTodo.value = res;

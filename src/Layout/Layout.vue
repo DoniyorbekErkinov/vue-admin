@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch, onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
 const router = useRouter();
 const routers = ref([
-  { name: "Dashboard", link: "/", img: '/panda2.png' },
-  { name: "Users", link: "/users", img: '/users.png' },
+  { name: 'Dashboard', link: '/', img: '/panda2.png' },
+  { name: 'Users', link: '/users', img: '/users.png' },
 ]);
 
 function goPage(link: string) {
@@ -13,13 +13,12 @@ function goPage(link: string) {
 function logOut() {
   localStorage.clear();
   if (!localStorage.access) {
-    router.push("/login");
+    router.push('/login');
   }
 }
 </script>
 <template>
   <div class="h-full relative">
-   
     <div
       class="slg:w-[285px] slg:flex width-transition slg:flex-col slg:fixed slg:inset-y-0 justify-center dark:bg-[#352e78] bg-[#DAF1F9]"
     >
@@ -29,32 +28,22 @@ function logOut() {
       >
         <div class="flex-grow">
           <div class="flex justify-center items-center">
-            <img
-              src="/pandaicon.png"
-              class="w-[19%] mr-4"
-              alt="flaticon.com"
-            />
-            <p
-              class="text-snow text-3xl font-earthlight text-center"
-            >
-              PANDAS
-            </p>
+            <img src="/pandaicon.png" class="w-[19%] mr-4" alt="flaticon.com" />
+            <p class="text-snow text-3xl font-earthlight text-center">PANDAS</p>
           </div>
           <div class="mt-8">
-            <router-link :to="item.link"
+            <router-link
+              :to="item.link"
               class="flex items-center mt-3 py-1 px-8"
               v-for="(item, i) in routers"
               :key="i"
             >
-              <img                
-                class="w-1/6 mr-4 cursor-pointer"                
+              <img
+                class="w-1/6 mr-4 cursor-pointer"
                 :src="item.img"
                 @click="goPage(item.link)"
               />
-              <span               
-                class="text-snow text-xl text-left"                
-                >{{ item.name }}</span
-              >
+              <span class="text-snow text-xl text-left">{{ item.name }}</span>
             </router-link>
           </div>
         </div>
@@ -92,7 +81,7 @@ function logOut() {
               stroke-linejoin="round"
             />
           </svg>
-        </div>        
+        </div>
       </div>
     </div>
     <div

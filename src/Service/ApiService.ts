@@ -1,11 +1,11 @@
-import axios, { AxiosError  } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getItem } from '../helpers/storage';
 const env = import.meta.env;
 
 function createInstance(baseURL: string, type: string) {
   const headers: any = {
     Accept: 'application/json',
-    'Content-Type': type
+    'Content-Type': type,
   };
 
   const axiosInstance = axios.create({ baseURL, headers });
@@ -17,7 +17,7 @@ function createInstance(baseURL: string, type: string) {
       }
       return config;
     },
-    (error: any) => Promise.reject(error)
+    (error: any) => Promise.reject(error),
   );
   axiosInstance.interceptors.response.use(
     async (res: any) => res,
@@ -32,9 +32,9 @@ function createInstance(baseURL: string, type: string) {
             {
               headers: {
                 ...headers,
-                authorization: `Bearer ${refreshToken}`
-              }
-            }
+                authorization: `Bearer ${refreshToken}`,
+              },
+            },
           )
           .then((res: any) => {
             localStorage.setItem('Authorization', res.data.access);
@@ -42,13 +42,13 @@ function createInstance(baseURL: string, type: string) {
           })
           .catch((err) => {
             console.log(err);
-            
+
             localStorage.clear();
             window.location.reload();
           });
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   return axiosInstance;

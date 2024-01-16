@@ -19,7 +19,7 @@ export default {
   props: {
     size: {
       type: String,
-      default: "w-5 h-5 bg-[#383874]",
+      default: 'w-5 h-5 bg-[#383874]',
     },
   },
 };
