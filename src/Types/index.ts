@@ -6,6 +6,7 @@ export type UserType = {
   image: string;
   lastName: string;
   username: string;
+  fullName: string;
 };
 
 export type LoginForm = {

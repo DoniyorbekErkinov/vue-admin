@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', {
         return await usePost({ url: 'auth/login', data }).then((res) => {
           setItem('access', res.data.token);
           setItem('id', res.data.id);
+          setItem('username', res.data.username);
           this.getUserData();
           return 'success';
         });
@@ -28,10 +29,10 @@ export const useUserStore = defineStore('user', {
         this.userData = {
           id: res.data.id,
           username: res.data.username,
-          img: res.data.image,
-          fullName: `${res.data.firstName} ${res.data.lastName}`,
-          birthDate: res.data?.birthDate,
-          address: res.data.address,
+          image: res.data.image,
+          fullName: `${res.data.firstName} ${res.data.lastName}`,          
+          email: res.data.email,
+          gender: res.data.gender,
         };
       });
     },

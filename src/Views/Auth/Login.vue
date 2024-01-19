@@ -61,10 +61,9 @@ function login(e: any): void {
   if (e.keyCode === 13 || e.keyCode == undefined) {
     if (form.value.password && form.value.username) {
       store.login(form.value).then((res) => {
-        console.log(res);        
         router.push("/");
+        alert('Loged in');
       })
-      alert('Loged in');
     } else {
       alert('Login yoki parol kiritilmagan');
     }

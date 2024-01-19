@@ -20,14 +20,14 @@
             <div
               class="text-slate-200 text-lg font-medium tracking-wider bg-[#75b2be] rounded-t-2xl"
             >
-              {{ user.name }}
+              {{ user.username }}
             </div>
             <ul class="py-4">
               <li
                 class="my-2 px-4 text-center flex justify-between items-center"
               >
                 <span class="text-lg"> Fullname:</span>
-                <span>{{ user.name }}</span>
+                <span>{{ user.fullName }}</span>
               </li>
               <li
                 class="my-2 px-4 text-center flex justify-between items-center"
@@ -44,8 +44,8 @@
               <li
                 class="my-2 px-4 text-center flex justify-between items-center"
               >
-                <span class="text-lg"> Phone:</span>
-                <span>{{ user.phone }}</span>
+                <span class="text-lg"> gender:</span>
+                <span>{{ user.gender }}</span>
               </li>
             </ul>
           </div>
@@ -76,45 +76,16 @@
 </template>
 
 <script setup lang="ts">
-import { ApiService } from '../Service/ApiService';
 import type { UserType } from '../Types/index';
 import { ref, onMounted } from 'vue';
-const baseUrl = 'https://jsonplaceholder.typicode.com';
 const users = ref<UserType[]>([]);
 const userTodo = ref([]);
 const loading = ref<Boolean>(false);
 async function getUserTodo(id: string | number) {
-  loading.value = true;
-  await ApiService.get(
-    `https://jsonplaceholder.typicode.com/users/${id}/todos`,
-    {},
-  )
-    .then((res) => {
-      userTodo.value = res;
-      loading.value = false;
-    })
-    .catch((e) => {
-      loading.value = false;
-      console.log(e);
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+  loading.value = true;  
 }
 async function getUser() {
   loading.value = true;
-  await ApiService.get(`https://jsonplaceholder.typicode.com/users`)
-    .then((resp) => {
-      users.value = resp;
-      loading.value = false;
-    })
-    .catch((e) => {
-      console.log(e);
-      loading.value = false;
-    })
-    .finally(() => {
-      loading.value = false;
-    });
 }
 onMounted(async () => {
   getUser();
