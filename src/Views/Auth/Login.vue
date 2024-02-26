@@ -17,15 +17,16 @@
         <span class="absolute top-20">Login: kminchelle</span>
         <span class="absolute top-24">Password: 0lelplR</span>
         <div class="flex flex-col mt-10">
-          <div class="xl:w-96" data-te-input-wrapper-init>
+          <div class="xl:w-96">
             <input
               v-model="form.username"
+              ref="usernameInput"
               type="text"
               class="peer block min-h-[auto] w-full rounded border-0 shadow-sm mt-4 py-2 bg-transparent px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear shadow-slate-600"
               placeholder="Username"
             />
           </div>
-          <div class="xl:w-96" data-te-input-wrapper-init>
+          <div class="xl:w-96">
             <input
               v-model="form.password"
               type="text"
@@ -47,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import {useUserStore} from './Login.store'
 import {LoginForm} from '../../Types/index'
@@ -57,6 +58,7 @@ const form = ref<LoginForm>({
   username: '',
   password: '',
 });
+const usernameInput = ref<any>(null)
 function login(e: any): void {
   if (e.keyCode === 13 || e.keyCode == undefined) {
     if (form.value.password && form.value.username) {
@@ -69,4 +71,8 @@ function login(e: any): void {
     }
   }
 }
+
+onMounted(() => {
+  usernameInput.value.focus()
+})
 </script>

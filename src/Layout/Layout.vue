@@ -27,7 +27,6 @@ function logOut() {
       >
         <div class="flex-grow">
           <div class="flex justify-center items-center h-[60px] border-b border-slate-400">
-            <img src="/pandaicon.png" class="w-[19%] mr-4" alt="flaticon.com" />
             <p class="text-snow text-3xl font-earthlight text-center">Vue Admin</p>
           </div>
           <div class="mt-8">
@@ -37,11 +36,6 @@ function logOut() {
               v-for="(item, i) in routers"
               :key="i"
             >
-              <img
-                class="w-1/6 mr-4 cursor-pointer"
-                :src="item.img"
-                @click="goPage(item.link)"
-              />
               <span class="text-snow text-xl text-left">{{ item.name }}</span>
             </router-link>
           </div>
@@ -53,22 +47,14 @@ function logOut() {
       id="scrollTop"
     >
     <!-- Navbar Start -->
-    <div class="h-[60px] bg-blueish-black">
+    <div class="h-[60px] bg-blueish-black flex justify-end items-center w-full px-8">
       <div
         @click="logOut"
-        class="flex justify-center items-end bg-[#dbdff14d] cursor-pointer mx-auto py-3 mb-2 w-1/2 rounded-full"
+        class="flex justify-center items-end bg-[#dbdff14d] cursor-pointer py-3 px-6 rounded-full hover:shadow-dad hover:shadow-md"
         >
           <BaseIcon name="LogOut"/>
         </div>
     </div>
-    <div class="w-8 h-8 bg-bluedark"></div>
-    <div class="w-8 h-8 bg-dark"></div>
-    <div class="w-8 h-8 bg-birches"></div>
-    <div class="w-8 h-8 bg-night-blue"></div>
-    <div class="w-8 h-8 bg-purple-heart"></div>
-    <div class="w-8 h-8 bg-purple-blue"></div>
-    <div class="w-8 h-8 bg-blueish-black"></div>
-    <div class="w-8 h-8 bg-sky-900"></div>
     <!-- Navbar End-->
       <RouterView />
     </div>
